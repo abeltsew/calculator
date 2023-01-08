@@ -12,7 +12,7 @@
       <div class="display">0</div>
       <div class="keys">
         <div class="Row">
-          <div class="key clear">AC</div>
+          <div class="key clear">C</div>
           <div class="key one modulo">%</div>
           <div class="key one yellow divide">/</div>
         </div>
@@ -46,6 +46,72 @@
       </div>
     </div>
     <script>
+      const display = document.querySelector(".display");
+
+      let key = document.querySelectorAll(".key");
+
+      let a = 0;
+      let b = 0;
+      isFirst = true;
+      isSecond = false;
+      hasDot = false;
+      sign = "";
+      const handleInput = (input) => {
+        if (input.innerHTML === "C") {
+          display.innerHTML = 0;
+          a = 0;
+          b = 0;
+          return;
+        }
+        if (isFirst) {
+          if (input.innerHTML == "." || !isNaN(input.innerHTML)) {
+            if (display.innerHTML == "0") {
+              display.innerHTML = input.innerHTML;
+            } else {
+              display.innerHTML = `${display.innerHTML}${input.innerHTML}`;
+            }
+          } else if (isNaN(input.innerHTML)) {
+            console.log(input.innerHTML);
+            a = parseFloat(display.innerHTML);
+            sign = input.innerHTML;
+            isFirst = false;
+          }
+        } else {
+          if (!isSecond) {
+            display.innerHTML = input.innerHTML;
+          } else {
+            if (input.innerHTML == "." || !isNaN(input.innerHTML)) {
+              if (display.innerHTML == "0") {
+                display.innerHTML = input.innerHTML;
+              } else {
+                display.innerHTML = `${display.innerHTML}${input.innerHTML}`;
+              }
+            } else if (isNaN(input.innerHTML)) {
+              if (input.innerHTML !== "=") {
+                b = parseFloat(display.innerHTML);
+                display.innerHTML = operate(a, b, sign);
+                a = operate(a, b, sign);
+                isSecond = false;
+                sign = input.innerHTML;
+                return;
+              } else {
+                b = parseFloat(display.innerHTML);
+                display.innerHTML = operate(a, b, sign);
+                a = operate(a, b, sign);
+                isSecond = false;
+                return;
+              }
+            }
+          }
+
+          isSecond = true;
+        }
+      };
+
+      key.forEach((input) =>
+        input.addEventListener("click", () => handleInput(input))
+      );
+
       const add = (a, b) => {
         return a + b;
       };
@@ -60,15 +126,16 @@
       };
 
       const operate = (a, b, operator) => {
+        console.log(a, b, operator);
         switch (operator) {
-          case "add":
-            add(a, b);
-          case "subtract":
-            subtract(a, b);
-          case "multiply":
-            multiply(a, b);
-          case "divide":
-            divide(a, b);
+          case "+":
+            return add(a, b);
+          case "-":
+            return subtract(a, b);
+          case "X":
+            return multiply(a, b);
+          case "/":
+            return divide(a, b);
           default:
             break;
         }
