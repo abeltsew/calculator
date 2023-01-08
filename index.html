@@ -4,14 +4,47 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      body {
-        background-color: antiquewhite;
-      }
-    </style>
+    <link rel="stylesheet" href="css/styles.css" />
     <title>Document</title>
   </head>
   <body>
+    <div class="calculator">
+      <div class="display">0</div>
+      <div class="keys">
+        <div class="Row">
+          <div class="key clear">AC</div>
+          <div class="key one modulo">%</div>
+          <div class="key one yellow divide">/</div>
+        </div>
+        <div class="Row">
+          <div class="key one num">7</div>
+          <div class="key one num">8</div>
+          <div class="key one num">9</div>
+          <div class="key one yellow multiply">X</div>
+        </div>
+        <div class="Row">
+          <div class="key one num">4</div>
+          <div class="key one num">5</div>
+          <div class="key one num">6</div>
+          <div class="key one yellow divide">-</div>
+        </div>
+
+        <div class="Row">
+          <div class="key one num">1</div>
+          <div class="key one num">2</div>
+          <div class="key one num">3</div>
+          <div class="key one yellow add">+</div>
+        </div>
+
+        <div class="Row">
+          <div class="key two num zero">0</div>
+          <div class="key one num">.</div>
+          <div class="key one yellow num equal">=</div>
+        </div>
+
+        <div class=""></div>
+      </div>
+    </div>
     <script>
       const add = (a, b) => {
         return a + b;
@@ -24,6 +57,21 @@
       };
       const divide = (a, b) => {
         return a / b;
+      };
+
+      const operate = (a, b, operator) => {
+        switch (operator) {
+          case "add":
+            add(a, b);
+          case "subtract":
+            subtract(a, b);
+          case "multiply":
+            multiply(a, b);
+          case "divide":
+            divide(a, b);
+          default:
+            break;
+        }
       };
     </script>
   </body>
